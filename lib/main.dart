@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'joke.dart';
+import 'notification_option.dart';
 
 void main() => runApp(new MyApp());
 
@@ -9,6 +10,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     var routes = <String, WidgetBuilder>{
       "/Joke": (BuildContext context) => new Joke(),
+      "/NotificationOption": (BuildContext context) => new NotificationOption(),
     };
     return new MaterialApp(
       debugShowCheckedModeBanner: false,
@@ -102,6 +104,9 @@ class MenuButton extends StatelessWidget {
   void onPressed(BuildContext context) {
     if (this.id == 1) {
       Navigator.of(context).pushNamed("/Joke");
+    }
+    else if(this.id == 4) {
+      Navigator.of(context).pushNamed("/NotificationOption");
     }
   }
 
