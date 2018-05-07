@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'joke.dart';
+import 'categories.dart';
 import 'notification_option.dart';
 
 void main() => runApp(new MyApp());
@@ -11,6 +12,7 @@ class MyApp extends StatelessWidget {
     var routes = <String, WidgetBuilder>{
       "/Joke": (BuildContext context) => new Joke(),
       "/NotificationOption": (BuildContext context) => new NotificationOption(),
+      "/Categories" : (BuildContext context) => new Categories(),
     };
     return new MaterialApp(
       debugShowCheckedModeBanner: false,
@@ -71,21 +73,9 @@ class _MyHomePageState extends State<MyHomePage> {
             new MenuButton(id: 3, text: 'Favoriler', iconData: Icons.favorite),
             new MenuButton(id: 4, text: 'Bildirim Ayarı', iconData: Icons.settings),
             new MenuButton(id: 5, text: 'Fıkra Gönder', iconData: Icons.mail),
-            new Text(
-              'AA Komik! uygulaması ana ekranı.',
-            ),
-            new Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.display1,
-            ),
           ],
         ),
       ),
-      floatingActionButton: new FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: new Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }
@@ -104,6 +94,9 @@ class MenuButton extends StatelessWidget {
   void onPressed(BuildContext context) {
     if (this.id == 1) {
       Navigator.of(context).pushNamed("/Joke");
+    }
+    else if(this.id==2){
+      Navigator.of(context).pushNamed("/Categories");
     }
     else if(this.id == 4) {
       Navigator.of(context).pushNamed("/NotificationOption");
