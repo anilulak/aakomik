@@ -11,6 +11,7 @@ class CategoryListItem extends StatelessWidget {
     return new ListTile(
         onTap: () {
           print('hello');
+          Navigator.of(context).pushNamed("/Jokes");
         },
         leading: new CircleAvatar(
             child: new Text(_categoryModal.categoryId.toString())),

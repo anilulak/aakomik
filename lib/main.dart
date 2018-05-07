@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'joke.dart';
 import 'categories.dart';
 import 'notification_option.dart';
+import 'jokes.dart';
 
 void main() => runApp(new MyApp());
 
@@ -12,7 +13,8 @@ class MyApp extends StatelessWidget {
     var routes = <String, WidgetBuilder>{
       "/Joke": (BuildContext context) => new Joke(),
       "/NotificationOption": (BuildContext context) => new NotificationOption(),
-      "/Categories" : (BuildContext context) => new Categories(),
+      "/Categories": (BuildContext context) => new Categories(),
+      "/Jokes": (BuildContext context) => new Jokes(),
     };
     return new MaterialApp(
       debugShowCheckedModeBanner: false,
