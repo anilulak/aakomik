@@ -20,6 +20,7 @@ class FavouriteListItem extends StatelessWidget {
           },
         ),
         title: new Text(_favouriteModal.jokeHeader),
-        subtitle: new Text(_favouriteModal.jokeText));
+        //subtitle: new Text(_favouriteModal.jokeText)
+    );
   }
 }
