@@ -4,6 +4,7 @@ import 'categories.dart';
 import 'notification_option.dart';
 import 'jokes.dart';
 import 'favourites.dart';
+import 'mail.dart';
 
 void main() => runApp(new MyApp());
 
@@ -17,6 +18,7 @@ class MyApp extends StatelessWidget {
       "/Categories": (BuildContext context) => new Categories(),
       "/Jokes": (BuildContext context) => new Jokes(),
       "/Favourites": (BuildContext context) => new Favourites(),
+      "/Mail": (BuildContext context) => new Mail(),
     };
     return new MaterialApp(
       debugShowCheckedModeBanner: false,
@@ -40,13 +42,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -107,6 +102,9 @@ class MenuButton extends StatelessWidget {
     }
     else if(this.id == 4) {
       Navigator.of(context).pushNamed("/NotificationOption");
+    }
+    else if(this.id == 5) {
+      Navigator.of(context).pushNamed("/Mail");
     }
   }
 
