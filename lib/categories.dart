@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:aakomik/categorieslist/category_list.dart';
 import 'package:aakomik/categorieslist/modal/category.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Categories extends StatelessWidget {
   @override
@@ -12,33 +13,33 @@ class Categories extends StatelessWidget {
         title: new Text(title),
         centerTitle: true,
       ),
-      body: new CategoriesPage(),
+      body: new StreamBuilder<QuerySnapshot>(
+        stream: Firestore.instance.collection('categories').snapshots(),
+        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+          if (!snapshot.hasData) {
+            return new Text('Loading...');
+          }
+          return new CategoriesPage(
+            categoryModal:
+                snapshot.data.documents.map((DocumentSnapshot document) {
+              return new CategoryModal(
+                  categoryId: int.parse(document['id'].toString()),
+                  categoryName: document['name'].toString());
+            }).toList(),
+          );
+        },
+      ),
     );
   }
 }
 
 class CategoriesPage extends StatelessWidget {
+  final List<CategoryModal> categoryModal;
+
+  CategoriesPage({this.categoryModal});
+
   _buildCategoriesList() {
-    return <CategoryModal>[
-      const CategoryModal(
-          categoryId: 1, categoryName: 'Genel Fıkralar'),
-      const CategoryModal(
-          categoryId: 2, categoryName: 'Karadeniz Fıkraları'),
-      const CategoryModal(
-          categoryId: 3, categoryName: 'Nasreddin Hoca Fıkraları'),
-      const CategoryModal(
-          categoryId: 4, categoryName: 'Okul Fıkraları'),
-      const CategoryModal(
-          categoryId: 5, categoryName: 'Temel Fıkraları'),
-      const CategoryModal(
-          categoryId: 6, categoryName: 'Kayserili Fıkraları'),
-      const CategoryModal(
-          categoryId: 7, categoryName: 'Deli Fıkraları'),
-      const CategoryModal(
-          categoryId: 8, categoryName: 'Erzurum Fıkraları'),
-      const CategoryModal(
-          categoryId: 9, categoryName: 'Asker Fıkraları'),
-    ];
+    return categoryModal;
   }
 
   @override
@@ -46,7 +47,6 @@ class CategoriesPage extends StatelessWidget {
     return new Scaffold(body: new CategoriesList(_buildCategoriesList()));
   }
 }
-
 
 /*class Categories extends StatelessWidget {
   @override

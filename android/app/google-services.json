@@ -1,0 +1,73 @@
+{
+  "project_info": {
+    "project_number": "341883361740",
+    "firebase_url": "https://aakomik-c8859.firebaseio.com",
+    "project_id": "aakomik-c8859",
+    "storage_bucket": "aakomik-c8859.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:341883361740:android:86b338cd8d9f094b",
+        "android_client_info": {
+          "package_name": "com.yourcompany.aakomik"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "341883361740-dn1dcf8bn81ur8htehjjlvm9b7k4mmqv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDm-_YucRZ8i6NWqImLDiSC-PeI5-0odyw"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:341883361740:android:ff1430d331efb46f",
+        "android_client_info": {
+          "package_name": "com.yourcompany.babynames"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "341883361740-dn1dcf8bn81ur8htehjjlvm9b7k4mmqv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDm-_YucRZ8i6NWqImLDiSC-PeI5-0odyw"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
