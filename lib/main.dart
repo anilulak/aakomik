@@ -3,6 +3,7 @@ import 'joke.dart';
 import 'categories.dart';
 import 'notification_option.dart';
 import 'jokes.dart';
+import 'favourites.dart';
 
 void main() => runApp(new MyApp());
 
@@ -15,6 +16,7 @@ class MyApp extends StatelessWidget {
       "/NotificationOption": (BuildContext context) => new NotificationOption(),
       "/Categories": (BuildContext context) => new Categories(),
       "/Jokes": (BuildContext context) => new Jokes(),
+      "/Favourites": (BuildContext context) => new Favourites(),
     };
     return new MaterialApp(
       debugShowCheckedModeBanner: false,
@@ -99,6 +101,9 @@ class MenuButton extends StatelessWidget {
     }
     else if(this.id==2){
       Navigator.of(context).pushNamed("/Categories");
+    }
+    else if(this.id == 3) {
+      Navigator.of(context).pushNamed("/Favourites");
     }
     else if(this.id == 4) {
       Navigator.of(context).pushNamed("/NotificationOption");
