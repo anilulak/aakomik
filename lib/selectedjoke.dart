@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:aakomik/randomjoke.dart';
+import 'dart:math';
 
-class Joke extends StatelessWidget {
+class SelectedJoke extends StatelessWidget {
   // This widget is the root of your application.
-  final category_id;
-  final joke_id;
+  final String category_id;
+  final String joke_id;
 
-  Joke({this.category_id,this.joke_id});
+  SelectedJoke({this.category_id,this.joke_id});
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +22,6 @@ class Joke extends StatelessWidget {
             builder:
                 (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
               if (!snapshot.hasData) return new Text('Loading...');
-              final int numberOfJokes = snapshot.data.documents.length; // todo: get a random value out of numberofJokes. assign it to joke_id . Getting joke id from prev screen is not necessary, can changed.
               return new Container(
                 //alignment: Alignment.topCenter,
                 //width: MediaQuery.of(context).size.width,
@@ -59,12 +60,12 @@ class Joke extends StatelessWidget {
                         child: new Column(
                           children: <Widget>[
                             new Text(
-                              snapshot.data.documents[joke_id].data['title']
+                              snapshot.data.documents[int.parse(joke_id)].data['title']
                                   .toString(),
                               style: new TextStyle(fontWeight: FontWeight.bold),
                             ),
                             new Text(
-                              snapshot.data.documents[joke_id].data['text']
+                              snapshot.data.documents[int.parse(joke_id)].data['text']
                                   .toString(),
                               textAlign: TextAlign.center,
                             )
@@ -90,7 +91,13 @@ class JokeMenuButton extends StatelessWidget {
 
   void onPressed(BuildContext context) {
     if (this.id == 2) {
-      Navigator.of(context).pushNamed("/Joke");
+      Navigator.push(
+          context,
+          new MaterialPageRoute(
+            builder: (context) => new RandomJoke(),   //category id same with db, joke id is db-1 since it becomes a list when it gets snapshotted.
+            //category id should be string since it will sent to firestore and that field is kept in string, joke id should be a int , since its a index of a list.
+          )                                                               //todo: give these numbers randomly
+      );
     }
   }
 
@@ -103,19 +110,19 @@ class JokeMenuButton extends StatelessWidget {
             color: Colors.deepOrangeAccent,
             onPressed: () => onPressed(context),
             child: new Container(
-                //width: MediaQuery.of(context).size.width / 3,
+              //width: MediaQuery.of(context).size.width / 3,
                 child: new Row(
-              //crossAxisAlignment: CrossAxisAlignment.center,
-              //mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                new Container(child: new Icon(iconData)),
-                new Container(
-                    padding: new EdgeInsets.only(
-                      left: MediaQuery.of(context).size.width / 45,
-                    ),
-                    //alignment: Alignment.topRight,
-                    child: new Text(text)),
-              ],
-            ))));
+                  //crossAxisAlignment: CrossAxisAlignment.center,
+                  //mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    new Container(child: new Icon(iconData)),
+                    new Container(
+                        padding: new EdgeInsets.only(
+                          left: MediaQuery.of(context).size.width / 45,
+                        ),
+                        //alignment: Alignment.topRight,
+                        child: new Text(text)),
+                  ],
+                ))));
   }
 }

@@ -118,9 +118,9 @@ bool sendMail(String jokeHeader, String jokeText) {
   // If you want to use an arbitrary SMTP server, go with `new SmtpOptions()`.
   // This class below is just for convenience. There are more similar classes available.
   var options = new GmailSmtpOptions()
-    ..username = 'your mail address' // like anil@gmail.com
+    ..username = 'se380aakomik@gmail.com' // like anil@gmail.com
     ..password =
-        'your password'; // Note: if you have Google's "app specific passwords" enabled,
+        '123456aa!'; // Note: if you have Google's "app specific passwords" enabled,
   // you need to use one of those here.
 
   // How you use and store passwords is up to you. Beware of storing passwords in plain.
@@ -130,8 +130,8 @@ bool sendMail(String jokeHeader, String jokeText) {
 
   // Create our mail/envelope.
   var envelope = new Envelope()
-    ..from = 'amifailulak@gmail.com'
-    ..recipients.add('anil_ulak@hotmail.com')
+    ..from = 'se380aakomik@gmail.com'
+    ..recipients.add('se380aakomik@gmail.com')
     //..bccRecipients.add('hidden@recipient.com')
     ..subject = 'AA Komik! Yeni Fıkra.'
     //..text = jokeHeader + jokeText

@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
-import 'joke.dart';
+import 'randomjoke.dart';
 import 'categories.dart';
 import 'notification_option.dart';
 import 'jokes.dart';
 import 'favourites.dart';
 import 'mail.dart';
+import 'selectedjoke.dart';
+import 'dart:math';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 void main() => runApp(new MyApp());
 
@@ -13,12 +16,13 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var routes = <String, WidgetBuilder>{
-      "/Joke": (BuildContext context) => new Joke(),
+      "/Joke": (BuildContext context) => new RandomJoke(),
       "/NotificationOption": (BuildContext context) => new NotificationOption(),
       "/Categories": (BuildContext context) => new Categories(),
       "/Jokes": (BuildContext context) => new Jokes(),
       "/Favourites": (BuildContext context) => new Favourites(),
       "/Mail": (BuildContext context) => new Mail(),
+      "/SelectedJoke": (BuildContext context) => new SelectedJoke(),
     };
     return new MaterialApp(
       debugShowCheckedModeBanner: false,
@@ -92,11 +96,10 @@ class MenuButton extends StatelessWidget {
 
   void onPressed(BuildContext context) {
     if (this.id == 1) {
-
       Navigator.push(
           context,
           new MaterialPageRoute(
-            builder: (context) => new Joke(category_id: "2", joke_id:0),   //category id same with db, joke id is db-1 since it becomes a list when it gets snapshotted.
+            builder: (context) => new RandomJoke(),   //category id same with db, joke id is db-1 since it becomes a list when it gets snapshotted.
                                                                           //category id should be string since it will sent to firestore and that field is kept in string, joke id should be a int , since its a index of a list.
           )                                                               //todo: give these numbers randomly
       );

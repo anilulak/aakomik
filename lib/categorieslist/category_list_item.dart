@@ -14,7 +14,7 @@ class CategoryListItem extends StatelessWidget {
           Navigator.push(
               context,
               new MaterialPageRoute(
-                builder: (context) => new Jokes(category_id:"1"),   //category id same with db, joke id is db-1 since it becomes a list when it gets snapshotted.
+                builder: (context) => new Jokes(category_id: _categoryModal.categoryId.toString()),   //category id same with db, joke id is db-1 since it becomes a list when it gets snapshotted.
               )                                                     //todo: give index as a category_id
           );
         },

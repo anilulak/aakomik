@@ -5,7 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:aakomik/categorieslist/modal/category.dart';
 
 class Jokes extends StatelessWidget {
-  final category_id;
+  final String category_id;
 
 
   Jokes({this.category_id});
