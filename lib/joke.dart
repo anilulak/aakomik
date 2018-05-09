@@ -3,6 +3,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Joke extends StatelessWidget {
   // This widget is the root of your application.
+  final category_id;
+  final joke_id;
+
+  Joke({this.category_id,this.joke_id});
+
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
@@ -11,7 +16,7 @@ class Joke extends StatelessWidget {
           title: new Text('AA Komik!'),
         ),
         body: new StreamBuilder<QuerySnapshot>(
-            stream: Firestore.instance.collection("2").snapshots(), // todo: 2 must come from previous page.
+            stream: Firestore.instance.collection(category_id).snapshots(), // todo: 2 must come from previous page.
             builder:
                 (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
               if (!snapshot.hasData) return new Text('Loading...');
@@ -53,12 +58,12 @@ class Joke extends StatelessWidget {
                         child: new Column(
                           children: <Widget>[
                             new Text(
-                              snapshot.data.documents[0].data['title']  // todo: 0 must come from previous page.
+                              snapshot.data.documents[joke_id].data['title']  // todo: 0 must come from previous page.
                                   .toString(),
                               style: new TextStyle(fontWeight: FontWeight.bold),
                             ),
                             new Text(
-                              snapshot.data.documents[0].data['text'] // todo: 0 must come from previous page.
+                              snapshot.data.documents[joke_id].data['text'] // todo: 0 must come from previous page.
                                   .toString(),
                               textAlign: TextAlign.center,
                             )

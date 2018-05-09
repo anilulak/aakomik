@@ -92,7 +92,14 @@ class MenuButton extends StatelessWidget {
 
   void onPressed(BuildContext context) {
     if (this.id == 1) {
-      Navigator.of(context).pushNamed("/Joke");
+
+      Navigator.push(
+          context,
+          new MaterialPageRoute(
+            builder: (context) => new Joke(category_id: "2", joke_id:0),   //category id same with db, joke id is db-1 since it becomes a list when it gets snapshotted.
+                                                                          //category id should be string since it will sent to firestore and that field is kept in string, joke id should be a int , since its a index of a list.
+          )                                                               //todo: give these numbers randomly
+      );
     }
     else if(this.id==2){
       Navigator.of(context).pushNamed("/Categories");

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:aakomik/categorieslist/modal/category.dart';
-
+import 'package:aakomik/jokes.dart';
 class CategoryListItem extends StatelessWidget {
   final CategoryModal _categoryModal;
 
@@ -11,8 +11,12 @@ class CategoryListItem extends StatelessWidget {
     return new ListTile(
         onTap: () {
           print('hello');
-          Navigator.of(context).pushNamed("/Jokes");
-          //todo: categoryId will be passed to Jokes page.
+          Navigator.push(
+              context,
+              new MaterialPageRoute(
+                builder: (context) => new Jokes(category_id:"1"),   //category id same with db, joke id is db-1 since it becomes a list when it gets snapshotted.
+              )                                                     //todo: give index as a category_id
+          );
         },
         leading: new CircleAvatar(
             child: new Text(_categoryModal.categoryId.toString())),

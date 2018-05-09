@@ -5,6 +5,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:aakomik/categorieslist/modal/category.dart';
 
 class Jokes extends StatelessWidget {
+  final category_id;
+
+
+  Jokes({this.category_id});
   @override
   Widget build(BuildContext context) {
     final title = 'AA Komik!';
@@ -15,7 +19,7 @@ class Jokes extends StatelessWidget {
         centerTitle: true,
       ),
       body: new StreamBuilder<QuerySnapshot>(
-        stream: Firestore.instance.collection('2').snapshots(),
+        stream: Firestore.instance.collection(category_id).snapshots(),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (!snapshot.hasData) {
             return new Text('Loading...');
