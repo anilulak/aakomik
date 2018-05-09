@@ -16,10 +16,11 @@ class Joke extends StatelessWidget {
           title: new Text('AA Komik!'),
         ),
         body: new StreamBuilder<QuerySnapshot>(
-            stream: Firestore.instance.collection(category_id).snapshots(), // todo: 2 must come from previous page.
+            stream: Firestore.instance.collection(category_id).snapshots(),
             builder:
                 (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
               if (!snapshot.hasData) return new Text('Loading...');
+              final int numberOfJokes = snapshot.data.documents.length; // todo: get a random value out of numberofJokes. assign it to joke_id . Getting joke id from prev screen is not necessary, can changed.
               return new Container(
                 //alignment: Alignment.topCenter,
                 //width: MediaQuery.of(context).size.width,
@@ -58,12 +59,12 @@ class Joke extends StatelessWidget {
                         child: new Column(
                           children: <Widget>[
                             new Text(
-                              snapshot.data.documents[joke_id].data['title']  // todo: 0 must come from previous page.
+                              snapshot.data.documents[joke_id].data['title']
                                   .toString(),
                               style: new TextStyle(fontWeight: FontWeight.bold),
                             ),
                             new Text(
-                              snapshot.data.documents[joke_id].data['text'] // todo: 0 must come from previous page.
+                              snapshot.data.documents[joke_id].data['text']
                                   .toString(),
                               textAlign: TextAlign.center,
                             )
