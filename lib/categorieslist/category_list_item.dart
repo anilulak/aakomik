@@ -12,6 +12,7 @@ class CategoryListItem extends StatelessWidget {
         onTap: () {
           print('hello');
           Navigator.of(context).pushNamed("/Jokes");
+          //todo: categoryId will be passed to Jokes page.
         },
         leading: new CircleAvatar(
             child: new Text(_categoryModal.categoryId.toString())),

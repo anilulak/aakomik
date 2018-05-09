@@ -10,7 +10,6 @@ class JokeListItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return new ListTile(
         onTap: () {
-          print('hello from joke_list_item');
           Navigator.of(context).pushNamed("/Joke");
         },
         leading: new CircleAvatar(child: new Text(_jokeModal.categoryId.toString())),

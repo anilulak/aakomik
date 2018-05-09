@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:aakomik/jokeslist/joke_list.dart';
 import 'package:aakomik/jokeslist/modal/joke.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:aakomik/categorieslist/modal/category.dart';
 
 class Jokes extends StatelessWidget {
   @override
@@ -12,33 +14,36 @@ class Jokes extends StatelessWidget {
         title: new Text(title),
         centerTitle: true,
       ),
-      body: new JokesPage(),
+      body: new StreamBuilder<QuerySnapshot>(
+        stream: Firestore.instance.collection('2').snapshots(),
+        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+          if (!snapshot.hasData) {
+            return new Text('Loading...');
+          }
+          return new JokesPage(
+            jokeModal: snapshot.data.documents.map((DocumentSnapshot document) {
+              return new JokeModal(
+                categoryId: int.parse(document['category_id'].toString()),
+                jokeId: int.parse(document['joke_id'].toString()),
+                jokeHeader: document['title'].toString(),
+                jokeText: document['text'].toString(),
+              );
+            }).toList(),
+          );
+        },
+      ),
     );
   }
 }
 
 class JokesPage extends StatelessWidget {
+  CategoryModal categoryModal;
+  final List<JokeModal> jokeModal;
+
+  JokesPage({this.categoryModal, this.jokeModal});
+
   _buildJokesList() {
-    return <JokeModal>[
-      const JokeModal(
-          categoryId: 1, jokeId: 1, jokeHeader: 'Öldüğünde Öğreniriz', jokeText: 'Ne kadar da komik bir genel fıkra.'),
-      const JokeModal(
-          categoryId: 1, jokeId: 2, jokeHeader: 'Kuşluğu Beş Geçir', jokeText: 'Ne kadar da komik bir genel fıkra2.'),
-      const JokeModal(
-          categoryId: 1, jokeId: 3, jokeHeader: 'Papağanın İtirazı', jokeText: 'Ne kadar da komik bir genel fıkra3.'),
-      const JokeModal(
-          categoryId: 1, jokeId: 4, jokeHeader: 'Temel Askerde', jokeText: 'Ne kadar da komik bir genel fıkra4.'),
-      const JokeModal(
-          categoryId: 1, jokeId: 5, jokeHeader: 'Neden 6-0?', jokeText: 'Ne kadar da komik bir genel fıkra5.'),
-      const JokeModal(
-          categoryId: 1, jokeId: 6, jokeHeader: 'Acı Değil', jokeText: 'Ne kadar da komik bir genel fıkra6.'),
-      const JokeModal(
-          categoryId: 1, jokeId: 7, jokeHeader: 'Sağa Vur', jokeText: 'Ne kadar da komik bir genel fıkra7.'),
-      const JokeModal(
-          categoryId: 1, jokeId: 8, jokeHeader: '5 Atarız', jokeText: 'Ne kadar da komik bir genel fıkra8.'),
-      const JokeModal(
-          categoryId: 1, jokeId: 9, jokeHeader: 'Oğlum Bülent Ben Arif', jokeText: 'Ne kadar da komik bir genel fıkra9.'),
-    ];
+    return jokeModal;
   }
 
   @override
