@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Joke extends StatelessWidget {
   // This widget is the root of your application.
@@ -9,58 +10,64 @@ class Joke extends StatelessWidget {
           centerTitle: true,
           title: new Text('AA Komik!'),
         ),
-        body: new Container(
-          //alignment: Alignment.topCenter,
-          //width: MediaQuery.of(context).size.width,
-          child: new Column(
-            children: <Widget>[
-              new Container(
+        body: new StreamBuilder<QuerySnapshot>(
+            stream: Firestore.instance.collection("2").snapshots(), // todo: 2 must come from previous page.
+            builder:
+                (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+              if (!snapshot.hasData) return new Text('Loading...');
+              return new Container(
                 //alignment: Alignment.topCenter,
-
-                child: new Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                //width: MediaQuery.of(context).size.width,
+                child: new Column(
                   children: <Widget>[
-                    new Expanded(
-                        child: new JokeMenuButton(
-                            id: 1, text: 'Paylaş', iconData: Icons.share)),
-                    new Expanded(
-                        child: new JokeMenuButton(
-                            id: 2, text: 'Rastgele', iconData: Icons.shuffle)),
-                    new Expanded(
-                        child: new JokeMenuButton(
-                            id: 3,
-                            text: 'Favori Ekle',
-                            iconData: Icons.favorite_border))
+                    new Container(
+                      //alignment: Alignment.topCenter,
+                      child: new Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          new Expanded(
+                              child: new JokeMenuButton(
+                                  id: 1,
+                                  text: 'Paylaş',
+                                  iconData: Icons.share)),
+                          new Expanded(
+                              child: new JokeMenuButton(
+                                  id: 2,
+                                  text: 'Rastgele',
+                                  iconData: Icons.shuffle)),
+                          new Expanded(
+                              child: new JokeMenuButton(
+                                  id: 3,
+                                  text: 'Favori Ekle',
+                                  iconData: Icons.favorite_border))
+                        ],
+                      ),
+                    ),
+                    new Container(
+                        alignment: Alignment.topCenter,
+                        padding: new EdgeInsets.only(
+                          top: 10.0,
+                          left: 20.0,
+                          right: 20.0,
+                        ),
+                        child: new Column(
+                          children: <Widget>[
+                            new Text(
+                              snapshot.data.documents[0].data['title']  // todo: 0 must come from previous page.
+                                  .toString(),
+                              style: new TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                            new Text(
+                              snapshot.data.documents[0].data['text'] // todo: 0 must come from previous page.
+                                  .toString(),
+                              textAlign: TextAlign.center,
+                            )
+                          ],
+                        ))
                   ],
                 ),
-              ),
-              new Container(
-                  alignment: Alignment.topCenter,
-                  padding: new EdgeInsets.only(
-                    top: 10.0,
-                    left: 20.0,
-                    right: 20.0,
-                  ),
-                  child: new Column(
-                    children: <Widget>[
-                      new Text(
-                        'Pilot Temel',
-                        style: new TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                      new Text(
-                        'Pilot Temel var gücüyle bağırıyordu:'
-                            '"Ula sağ motor bozuldu. Düşeyrum, düşeyrum. Meydey düşeyrum. Kule düşeyrum."'
-                            'Kule hemen cevapladı:'
-                            '- "Mesaj anlaşıldı. Yerinizi bildirin, yerinizi bildirin.'
-                            'Temel gayet ciddi:'
-                            '-"Pilot kabini, öndeki sol koltuk, pilot kabini, öndeki sol koltuk."',
-                        textAlign: TextAlign.center,
-                      )
-                    ],
-                  ))
-            ],
-          ),
-        ));
+              );
+            }));
   }
 }
 
