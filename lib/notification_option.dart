@@ -16,7 +16,6 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 class NotificationOption extends StatefulWidget {
   final Storage storage = new Storage();
 
-  //NotificationOption({Key key, @required this.storage}) : super(key: key);
   @override
   State<StatefulWidget> createState() => new _NotificationOption();
 }
@@ -228,48 +227,6 @@ class NotificationSwitch extends StatelessWidget {
   }
 }
 
-// These blocks don't work. Permission denied error.
-/*void list(String path) {
-  try {
-    Directory root = new Directory(path);
-    if(root.existsSync()) {
-      for(FileSystemEntity f in root.listSync()) {
-        print(f.path);
-      }
-    }
-  } catch(e) {
-    print(e.toString());
-  }
-}
-
-bool writeFile(String file, String data, FileMode mode) {
-  try {
-    File f = new File(file);
-    RandomAccessFile rf = f.openSync(mode: mode);
-    rf.flushSync();
-    rf.closeSync();
-    return true;
-  } catch(e) {
-    print('WRITE:' + e.toString());
-    return false;
-  }
-}
-
-String readFile(String file) {
-  try {
-    File f = new File(file);
-    return f.readAsStringSync();
-  } catch(e) {
-    print('READ:' + e.toString());
-  }
-}
-
-Future<Directory> myFunc () async{
-  Directory appDocDir = await getApplicationDocumentsDirectory();
-  String appDocPath = appDocDir.path;
-  print(appDocPath);
-  return appDocDir;
-}*/
 
 // class to read/write file.
 class Storage {

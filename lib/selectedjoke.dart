@@ -16,7 +16,7 @@ class SelectedJoke extends StatelessWidget {
   String jokeHeaderForShare;
   String jokeTextForShare;
 
-  SelectedJoke({this.category_id,this.joke_id});
+  SelectedJoke({this.category_id, this.joke_id});
 
   @override
   Widget build(BuildContext context) {
@@ -39,8 +39,6 @@ class SelectedJoke extends StatelessWidget {
                   .toString();
 
               return new Container(
-                //alignment: Alignment.topCenter,
-                //width: MediaQuery.of(context).size.width,
                 child: new Column(
                   children: <Widget>[
                     new Container(
@@ -49,15 +47,15 @@ class SelectedJoke extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
                           new Expanded(
-                              child: new JokeMenuButton(
-                                id: 1,
-                                text: 'Paylaş',
-                                iconData: Icons.share,
-                                jokeHeaderForShare: jokeHeaderForShare,
-                                jokeTextForShare: jokeTextForShare,
-                                categoryId: category_id,
-                                jokeId: joke_id,
-                              ),
+                            child: new JokeMenuButton(
+                              id: 1,
+                              text: 'Paylaş',
+                              iconData: Icons.share,
+                              jokeHeaderForShare: jokeHeaderForShare,
+                              jokeTextForShare: jokeTextForShare,
+                              categoryId: category_id,
+                              jokeId: joke_id,
+                            ),
                           ),
                           new Expanded(
                             child: new JokeMenuButton(
@@ -73,13 +71,14 @@ class SelectedJoke extends StatelessWidget {
                           new Expanded(
                             child: new JokeMenuButton(
                               id: 3,
-                              text: 'Favori Ekle',
+                              text: 'Favorile',
                               iconData: Icons.favorite_border,
                               jokeHeaderForShare: jokeHeaderForShare,
                               jokeTextForShare: jokeTextForShare,
                               categoryId: category_id,
                               jokeId: joke_id,
-                            ),)
+                            ),
+                          )
                         ],
                       ),
                     ),
@@ -93,12 +92,14 @@ class SelectedJoke extends StatelessWidget {
                         child: new Column(
                           children: <Widget>[
                             new Text(
-                              snapshot.data.documents[int.parse(joke_id)].data['title']
+                              snapshot.data.documents[int.parse(joke_id)]
+                                  .data['title']
                                   .toString(),
                               style: new TextStyle(fontWeight: FontWeight.bold),
                             ),
                             new Text(
-                              snapshot.data.documents[int.parse(joke_id)].data['text']
+                              snapshot.data.documents[int.parse(joke_id)]
+                                  .data['text']
                                   .toString(),
                               textAlign: TextAlign.center,
                             )
@@ -142,10 +143,12 @@ class JokeMenuButton extends StatelessWidget {
     return new File('$path/favourites.txt');
   }
 
-  Future<File> writeOneFavourite(String category_id, String joke_id, String title, String text) async {
+  Future<File> writeOneFavourite(
+      String category_id, String joke_id, String title, String text) async {
     final file = await _localFileForFavourites;
 
-    String favouriteJoke = category_id + "*" + joke_id + "*" + title + "*" + text + "#";
+    String favouriteJoke =
+        category_id + "*" + joke_id + "*" + title + "*" + text + "#";
 
     // Write the file
     return file.writeAsString('$favouriteJoke', mode: FileMode.APPEND);
@@ -156,18 +159,15 @@ class JokeMenuButton extends StatelessWidget {
       final RenderBox box = context.findRenderObject();
       Share.share(jokeHeaderForShare + "\n" + jokeTextForShare,
           sharePositionOrigin: box.localToGlobal(Offset.zero) & box.size);
-    }
-    else if (this.id == 2) {
+    } else if (this.id == 2) {
       Navigator.push(
           context,
           new MaterialPageRoute(
-            builder: (context) => new RandomJoke(),   //category id same with db, joke id is db-1 since it becomes a list when it gets snapshotted.
-            //category id should be string since it will sent to firestore and that field is kept in string, joke id should be a int , since its a index of a list.
-          )                                                               //todo: give these numbers randomly
-      );
-    }
-    else if (this.id == 3) {
-      writeOneFavourite(categoryId, jokeId, jokeHeaderForShare, jokeTextForShare);
+            builder: (context) => new RandomJoke(),
+          ));
+    } else if (this.id == 3) {
+      writeOneFavourite(
+          categoryId, jokeId, jokeHeaderForShare, jokeTextForShare);
     }
   }
 
@@ -175,24 +175,25 @@ class JokeMenuButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new Container(
-        alignment: Alignment.center,
-        child: new RaisedButton(
-            color: Colors.deepOrangeAccent,
-            onPressed: () => onPressed(context),
-            child: new Container(
-              //width: MediaQuery.of(context).size.width / 3,
-                child: new Row(
-                  //crossAxisAlignment: CrossAxisAlignment.center,
-                  //mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    new Container(child: new Icon(iconData)),
-                    new Container(
-                        padding: new EdgeInsets.only(
-                          left: MediaQuery.of(context).size.width / 45,
-                        ),
-                        //alignment: Alignment.topRight,
-                        child: new Text(text)),
-                  ],
-                ))));
+      alignment: Alignment.center,
+      child: new RaisedButton(
+        color: Colors.deepOrangeAccent,
+        onPressed: () => onPressed(context),
+        child: new Container(
+          child: new Row(
+            children: <Widget>[
+              new Container(child: new Icon(iconData)),
+              new Container(
+                padding: new EdgeInsets.only(
+                  left: MediaQuery.of(context).size.width / 45,
+                ),
+                //alignment: Alignment.topRight,
+                child: new Text(text),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }

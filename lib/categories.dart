@@ -23,8 +23,9 @@ class Categories extends StatelessWidget {
             categoryModal:
                 snapshot.data.documents.map((DocumentSnapshot document) {
               return new CategoryModal(
-                  categoryId: int.parse(document['id'].toString()),
-                  categoryName: document['name'].toString());
+                categoryId: int.parse(document['id'].toString()),
+                categoryName: document['name'].toString(),
+              );
             }).toList(),
           );
         },
@@ -48,55 +49,3 @@ class CategoriesPage extends StatelessWidget {
   }
 }
 
-/*class Categories extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    final title = 'AA Komik!';
-
-    return new Scaffold(
-      appBar: new AppBar(
-        title: new Text(title),
-        centerTitle: true,
-      ),
-      body: new ListView(
-        children: <Widget>[
-          new List(),
-        ],
-      ),
-    );
-  }
-}
-
-class List extends StatefulWidget {
-  @override
-  State<StatefulWidget> createState() {
-    return new _List();
-  }
-}
-
-class _List extends State<List> {
-  @override
-  Widget build(BuildContext context) {
-    return new Container(
-      color: Colors.blue,
-      padding: new EdgeInsets.all(5.0),
-      child: new ListView(
-        children: <Widget>[
-          new ListTile(
-            // leading: new Icon(Icons.map),
-            title: new Text('Laz Fıkraları'),
-          ),
-          new ListTile(
-            title: new Text('Öğrenci- Öğretmen Fıkraları'),
-          ),
-          new ListTile(
-            title: new Text('Programmer Fıkraları'),
-            //onTap: _GetRandomFromSelectedCategory("ProgrammerJokes"),
-          )
-        ],
-      ),
-    );
-  }
-
-  void _GetRandomFromSelectedCategory() {}
-}*/

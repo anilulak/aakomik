@@ -46,7 +46,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
@@ -65,16 +64,12 @@ class _MyHomePageState extends State<MyHomePage> {
                     new Image(image: new AssetImage('assets/happy_emoji.png')),
                   ]),
             ),
-            //new Center(
-            //child: new Column(
-            //mainAxisAlignment: MainAxisAlignment.start,
-            //  children: <Widget>[
             new MenuButton(
                 id: 1, text: 'Rastgele Fıkra', iconData: Icons.shuffle),
-            //])),
             new MenuButton(id: 2, text: 'Kategoriler', iconData: Icons.list),
             new MenuButton(id: 3, text: 'Favoriler', iconData: Icons.favorite),
-            new MenuButton(id: 4, text: 'Bildirim Ayarı', iconData: Icons.settings),
+            new MenuButton(
+                id: 4, text: 'Bildirim Ayarı', iconData: Icons.settings),
             new MenuButton(id: 5, text: 'Fıkra Gönder', iconData: Icons.mail),
           ],
         ),
@@ -99,21 +94,15 @@ class MenuButton extends StatelessWidget {
       Navigator.push(
           context,
           new MaterialPageRoute(
-            builder: (context) => new RandomJoke(),   //category id same with db, joke id is db-1 since it becomes a list when it gets snapshotted.
-                                                                          //category id should be string since it will sent to firestore and that field is kept in string, joke id should be a int , since its a index of a list.
-          )                                                               //todo: give these numbers randomly
-      );
-    }
-    else if(this.id==2){
+            builder: (context) => new RandomJoke(),
+          ));
+    } else if (this.id == 2) {
       Navigator.of(context).pushNamed("/Categories");
-    }
-    else if(this.id == 3) {
+    } else if (this.id == 3) {
       Navigator.of(context).pushNamed("/Favourites");
-    }
-    else if(this.id == 4) {
+    } else if (this.id == 4) {
       Navigator.of(context).pushNamed("/NotificationOption");
-    }
-    else if(this.id == 5) {
+    } else if (this.id == 5) {
       Navigator.of(context).pushNamed("/Mail");
     }
   }
@@ -122,24 +111,31 @@ class MenuButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new Container(
-        alignment: Alignment.center,
-        child: new RaisedButton(
-            color: Colors.orange,
-            onPressed: () => onPressed(context),
-            child: new Container(
-                width: MediaQuery.of(context).size.width / 3,
-                child: new Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    new Container(child: new Icon(iconData)),
-                    new Container(
-                        padding: new EdgeInsets.only(
-                          left: MediaQuery.of(context).size.width / 45,
-                        ),
-                        alignment: Alignment.topRight,
-                        child: new Text(text)),
-                  ],
-                ))));
+      alignment: Alignment.center,
+      child: new RaisedButton(
+        color: Colors.orange,
+        onPressed: () => onPressed(context),
+        child: new Container(
+          width: MediaQuery.of(context).size.width / 2,
+          child: new Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              new Container(child: new Icon(iconData)),
+              new Container(
+                padding: new EdgeInsets.only(
+                  left: MediaQuery.of(context).size.width / 45,
+                ),
+                alignment: Alignment.topRight,
+                child: new Text(
+                  text,
+                  softWrap: true,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }

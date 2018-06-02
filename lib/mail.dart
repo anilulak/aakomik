@@ -149,38 +149,6 @@ bool sendMail(String jokeHeader, String jokeText) {
   //todo: note: it always returns false, it should be fixed.
 }
 
-/*Future<Null> noHeaderOrTextDialog(BuildContext context) async {
-  return showDialog<Null>(
-      context: context,
-      barrierDismissible: false, // user must tap button!
-      child: new AlertDialog(
-        title: new Text(
-          'UYARI!',
-          textAlign: TextAlign.center,
-        ),
-        content: new SingleChildScrollView(
-          child: new ListBody(
-            children: <Widget>[
-              new Text(
-                'Fıkra başlığı ya da içeriği boş bırakılamaz.',
-                textAlign: TextAlign.center,
-              ),
-            ],
-          ),
-        ),
-        actions: <Widget>[
-          new Container(
-            //alignment: Alignment.center,
-            child: new FlatButton(
-              child: new Text('Tamam'),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-          ),
-        ],
-      ));
-}*/
 
 void noHeaderOrTextDialog(BuildContext context) {
   AlertDialog dialog = new AlertDialog(
