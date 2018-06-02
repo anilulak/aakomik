@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'dart:math';
+import 'package:share/share.dart';
 
 class RandomJoke extends StatelessWidget {
   // This widget is the root of your application.
   String category_id;
   String joke_id;
+
+  String jokeHeaderForShare;
+  String jokeTextForShare;
 
   String generateRandomCategoryId() {
     var randomGenerator = new Random();
@@ -23,15 +27,25 @@ class RandomJoke extends StatelessWidget {
           title: new Text('AA Komik!'),
         ),
         body: new StreamBuilder<QuerySnapshot>(
-            stream: Firestore.instance.collection(generateRandomCategoryId()).snapshots(),
+            stream: Firestore.instance
+                .collection(generateRandomCategoryId())
+                .snapshots(),
             builder:
                 (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
               if (!snapshot.hasData) return new Text('Loading...');
               final int numberOfJokes = snapshot.data.documents.length;
               var randomGenerator = new Random();
               int randomJokeNumber = randomGenerator.nextInt(numberOfJokes);
-              // todo: get a random value out of numberofJokes. assign it to joke_id . Getting joke id from prev screen is not necessary, can changed.
+
               joke_id = randomJokeNumber.toString();
+
+              jokeHeaderForShare = snapshot
+                  .data.documents[int.parse(joke_id)].data['title']
+                  .toString();
+              jokeTextForShare = snapshot
+                  .data.documents[int.parse(joke_id)].data['text']
+                  .toString();
+
               return new Container(
                 //alignment: Alignment.topCenter,
                 //width: MediaQuery.of(context).size.width,
@@ -43,20 +57,32 @@ class RandomJoke extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
                           new Expanded(
-                              child: new JokeMenuButton(
-                                  id: 1,
-                                  text: 'Paylaş',
-                                  iconData: Icons.share)),
+                            child: new JokeMenuButton(
+                              id: 1,
+                              text: 'Paylaş',
+                              iconData: Icons.share,
+                              jokeHeaderForShare: jokeHeaderForShare,
+                              jokeTextForShare: jokeTextForShare,
+                            ),
+                          ),
                           new Expanded(
-                              child: new JokeMenuButton(
-                                  id: 2,
-                                  text: 'Rastgele',
-                                  iconData: Icons.shuffle)),
+                            child: new JokeMenuButton(
+                              id: 2,
+                              text: 'Rastgele',
+                              iconData: Icons.shuffle,
+                              jokeHeaderForShare: jokeHeaderForShare,
+                              jokeTextForShare: jokeTextForShare,
+                            ),
+                          ),
                           new Expanded(
-                              child: new JokeMenuButton(
-                                  id: 3,
-                                  text: 'Favori Ekle',
-                                  iconData: Icons.favorite_border))
+                            child: new JokeMenuButton(
+                              id: 3,
+                              text: 'Favori Ekle',
+                              iconData: Icons.favorite_border,
+                              jokeHeaderForShare: jokeHeaderForShare,
+                              jokeTextForShare: jokeTextForShare,
+                            ),
+                          )
                         ],
                       ),
                     ),
@@ -70,12 +96,14 @@ class RandomJoke extends StatelessWidget {
                         child: new Column(
                           children: <Widget>[
                             new Text(
-                              snapshot.data.documents[int.parse(joke_id)].data['title']
+                              snapshot.data.documents[int.parse(joke_id)]
+                                  .data['title']
                                   .toString(),
                               style: new TextStyle(fontWeight: FontWeight.bold),
                             ),
                             new Text(
-                              snapshot.data.documents[int.parse(joke_id)].data['text']
+                              snapshot.data.documents[int.parse(joke_id)]
+                                  .data['text']
                                   .toString(),
                               textAlign: TextAlign.center,
                             )
@@ -93,21 +121,28 @@ class JokeMenuButton extends StatelessWidget {
     this.id,
     this.text,
     this.iconData,
+    this.jokeHeaderForShare,
+    this.jokeTextForShare,
   });
 
   int id;
   String text;
   IconData iconData;
+  String jokeHeaderForShare;
+  String jokeTextForShare;
 
   void onPressed(BuildContext context) {
-    if (this.id == 2) {
+    if (this.id == 1) {
+      final RenderBox box = context.findRenderObject();
+      Share.share(jokeHeaderForShare + "\n" + jokeTextForShare,
+          sharePositionOrigin: box.localToGlobal(Offset.zero) & box.size);
+    }
+    else if (this.id == 2) {
       Navigator.push(
           context,
           new MaterialPageRoute(
-            builder: (context) => new RandomJoke(),   //category id same with db, joke id is db-1 since it becomes a list when it gets snapshotted.
-            //category id should be string since it will sent to firestore and that field is kept in string, joke id should be a int , since its a index of a list.
-          )                                                               //todo: give these numbers randomly
-      );
+            builder: (context) => new RandomJoke(),
+          ));
     }
   }
 
