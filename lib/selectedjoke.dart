@@ -1,6 +1,10 @@
+import 'dart:async';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:aakomik/randomjoke.dart';
+import 'package:path_provider/path_provider.dart';
 import 'dart:math';
 import 'package:share/share.dart';
 
@@ -51,6 +55,8 @@ class SelectedJoke extends StatelessWidget {
                                 iconData: Icons.share,
                                 jokeHeaderForShare: jokeHeaderForShare,
                                 jokeTextForShare: jokeTextForShare,
+                                categoryId: category_id,
+                                jokeId: joke_id,
                               ),
                           ),
                           new Expanded(
@@ -60,6 +66,8 @@ class SelectedJoke extends StatelessWidget {
                               iconData: Icons.shuffle,
                               jokeHeaderForShare: jokeHeaderForShare,
                               jokeTextForShare: jokeTextForShare,
+                              categoryId: category_id,
+                              jokeId: joke_id,
                             ),
                           ),
                           new Expanded(
@@ -69,6 +77,8 @@ class SelectedJoke extends StatelessWidget {
                               iconData: Icons.favorite_border,
                               jokeHeaderForShare: jokeHeaderForShare,
                               jokeTextForShare: jokeTextForShare,
+                              categoryId: category_id,
+                              jokeId: joke_id,
                             ),)
                         ],
                       ),
@@ -108,6 +118,8 @@ class JokeMenuButton extends StatelessWidget {
     this.iconData,
     this.jokeHeaderForShare,
     this.jokeTextForShare,
+    this.categoryId,
+    this.jokeId,
   });
 
   int id;
@@ -115,6 +127,29 @@ class JokeMenuButton extends StatelessWidget {
   IconData iconData;
   String jokeHeaderForShare;
   String jokeTextForShare;
+  String categoryId;
+  String jokeId;
+
+  Future<String> get _localPathForFavourites async {
+    final directory = await getApplicationDocumentsDirectory();
+
+    return directory.path;
+  }
+
+  Future<File> get _localFileForFavourites async {
+    final path = await _localPathForFavourites;
+
+    return new File('$path/favourites.txt');
+  }
+
+  Future<File> writeOneFavourite(String category_id, String joke_id, String title, String text) async {
+    final file = await _localFileForFavourites;
+
+    String favouriteJoke = category_id + "*" + joke_id + "*" + title + "*" + text + "#";
+
+    // Write the file
+    return file.writeAsString('$favouriteJoke', mode: FileMode.APPEND);
+  }
 
   void onPressed(BuildContext context) {
     if (this.id == 1) {
@@ -130,6 +165,9 @@ class JokeMenuButton extends StatelessWidget {
             //category id should be string since it will sent to firestore and that field is kept in string, joke id should be a int , since its a index of a list.
           )                                                               //todo: give these numbers randomly
       );
+    }
+    else if (this.id == 3) {
+      writeOneFavourite(categoryId, jokeId, jokeHeaderForShare, jokeTextForShare);
     }
   }
 
